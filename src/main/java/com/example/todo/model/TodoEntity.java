@@ -11,6 +11,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
+
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -25,4 +27,5 @@ public class TodoEntity {
 	private String userId;
 	private String title;
 	private boolean done;
+	private Date date; // 날짜 필드 추가
 }
