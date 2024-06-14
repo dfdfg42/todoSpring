@@ -1,7 +1,6 @@
 package com.example.todo.model;
 
 import org.hibernate.annotations.GenericGenerator;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -21,11 +20,12 @@ import java.util.Date;
 @Table(name ="Todo")
 public class TodoEntity {
 	@Id
-	@GeneratedValue(generator="system-uuid")  // 자동으로 id 성성
-	@GenericGenerator(name="system-uuid",strategy="uuid")
+	@GeneratedValue(generator="system-uuid")  // 자동으로 id 생성
+	@GenericGenerator(name="system-uuid", strategy="uuid")
 	private String id;
 	private String userId;
 	private String title;
 	private boolean done;
 	private Date date; // 날짜 필드 추가
+	private boolean isMainTask; // 메인 할 일 여부
 }
