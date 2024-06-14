@@ -67,7 +67,7 @@ public class TodoService {
 		todos.stream().filter(TodoDTO::isMainTask).forEach(todo -> content.append(formatTodoForMainQuest(todo)).append("\n"));
 
 		content.append("\nCLEAR QUEST\n");
-		todos.stream().filter(TodoDTO::isDone).forEach(todo -> content.append(formatTodoForClearQuest(todo)).append("\n"));
+		todos.stream().filter(todo -> todo.isDone() && todo.isMainTask()).forEach(todo -> content.append(formatTodoForClearQuest(todo)).append("\n"));
 
 		content.append("\n");
 
