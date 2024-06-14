@@ -9,7 +9,9 @@ import org.springframework.stereotype.Service;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -58,8 +60,10 @@ public class TodoService {
 		}
 	}
 
-	public void saveTodosToFile(String userId, String filePath) {
-		List<TodoEntity> entities = repository.findByUserId(userId);
+	public void saveTodosToFile(String userId, Date startDate, Date endDate, String filePath) {
+		List<TodoEntity> entities = repository.findByUserId(userId).stream()
+				.filter(todo -> !todo.getDate().before(startDate) && !todo.getDate().after(endDate))
+				.collect(Collectors.toList());
 		List<TodoDTO> todos = entities.stream().map(TodoDTO::new).collect(Collectors.toList());
 		StringBuilder content = new StringBuilder();
 

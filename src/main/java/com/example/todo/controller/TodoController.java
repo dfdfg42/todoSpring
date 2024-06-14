@@ -9,6 +9,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -74,8 +78,18 @@ public class TodoController {
 	}
 
 	@PostMapping("/export")
-	public ResponseEntity<?> exportTodos(@AuthenticationPrincipal String userId, @RequestParam String filePath) {
-		service.saveTodosToFile(userId, filePath);
-		return ResponseEntity.ok().build();
+	public ResponseEntity<?> exportTodos(@AuthenticationPrincipal String userId,
+										 @RequestParam String startDate,
+										 @RequestParam String endDate,
+										 @RequestParam String filePath) {
+		try {
+			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+			Date start = dateFormat.parse(startDate);
+			Date end = dateFormat.parse(endDate);
+			service.saveTodosToFile(userId, start, end, filePath);
+			return ResponseEntity.ok().build();
+		} catch (ParseException e) {
+			return ResponseEntity.badRequest().body("Invalid date format");
+		}
 	}
 }
