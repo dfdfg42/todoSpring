@@ -9,6 +9,8 @@ import com.example.todo.persistence.UserRepository;
 
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.Optional;
+
 @Slf4j
 @Service
 public class UserService {
@@ -33,5 +35,10 @@ public class UserService {
 			return originalUser;
 		}
 		return null;
+	}
+
+	public UserEntity getById(String userId) {
+		Optional<UserEntity> user = userRepository.findById(userId);
+		return user.orElse(null);
 	}
 }
